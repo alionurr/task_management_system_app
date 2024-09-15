@@ -1,9 +1,9 @@
-import { useForm, Controller } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { InputText } from 'primereact/inputtext'
 import { Button } from 'primereact/button'
 import { ErrorMessage } from '@hookform/error-message';
+import Input from '../components/Input';
 
 
 const schema = z.object({
@@ -41,86 +41,40 @@ const SignUp = () => {
               User Registration Form
             </h2>
             <form onSubmit={handleSubmit(onSubmit)}>
-              <div className='mb-4'>
-                <label
-                  htmlFor='name'
-                  className='block text-sm font-medium text-gray-700'
-                >
-                  Name
-                </label>
-                <Controller
-                  name='name'
-                  control={control}
-                  render={({ field }) => (
-                    <InputText
-                      id='name'
-                      {...field}
-                      className='w-full mt-1 border px-2 py-1 border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-md'
-                    />
-                  )}
-                />
-                <ErrorMessage
-                  errors={errors}
-                  name='name'
-                  render={({ message }) => (
-                    <div className='text-red-500'> {message} </div>
-                  )}
-                />
-              </div>
-              <div className='mb-4'>
-                <label
-                  htmlFor='email'
-                  className='block text-sm font-medium text-gray-700'
-                >
-                  Email
-                </label>
-                <Controller
-                  name='email'
-                  control={control}
-                  render={({ field }) => (
-                    <InputText
-                      id='email'
-                      type='email'
-                      {...field}
-                      className='w-full mt-1 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-md'
-                    />
-                  )}
-                />
-                <ErrorMessage
-                  errors={errors}
-                  name='email'
-                  render={({ message }) => (
-                    <div className='text-red-500'> {message} </div>
-                  )}
-                />
-              </div>
-              <div className='mb-4'>
-                <label
-                  htmlFor='password'
-                  className='block text-sm font-medium text-gray-700'
-                >
-                  Password
-                </label>
-                <Controller
-                  name='password'
-                  control={control}
-                  render={({ field }) => (
-                    <InputText
-                      id='password'
-                      type='password'
-                      {...field}
-                      className='w-full mt-1 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-md'
-                    />
-                  )}
-                />
-                <ErrorMessage
-                  errors={errors}
-                  name='password'
-                  render={({ message }) => (
-                    <div className='text-red-500'> {message} </div>
-                  )}
-                />
-              </div>
+              <Input label='Name' name='name' type='name' control={control} />
+              <ErrorMessage
+                errors={errors}
+                name='name'
+                render={({ message }) => (
+                  <div className='text-red-500'>{message}</div>
+                )}
+              />
+              <Input
+                label='Email'
+                name='email'
+                type='email'
+                control={control}
+              />
+              <ErrorMessage
+                errors={errors}
+                name='email'
+                render={({ message }) => (
+                  <div className='text-red-500'>{message}</div>
+                )}
+              />
+              <Input
+                label='Password'
+                name='password'
+                type='password'
+                control={control}
+              />
+              <ErrorMessage
+                errors={errors}
+                name='password'
+                render={({ message }) => (
+                  <div className='text-red-500'>{message}</div>
+                )}
+              />
               <div className='flex justify-center'>
                 <Button
                   label='Submit'

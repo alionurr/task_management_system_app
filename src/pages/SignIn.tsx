@@ -1,8 +1,8 @@
-import { useForm, Controller } from 'react-hook-form'
+import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { InputText } from 'primereact/inputtext'
 import { Button } from 'primereact/button'
+import Input from '../components/Input'
 import { ErrorMessage } from '@hookform/error-message'
 
 const schema = z.object({
@@ -36,64 +36,33 @@ const SignIn = () => {
           <div className='p-6 bg-white shadow-md rounded-2xl w-full max-w-md'>
             <h2 className='text-2xl font-bold mb-4 text-center'>Login Form</h2>
             <form onSubmit={handleSubmit(onSubmit)}>
-              <div className='mb-4'>
-                <label
-                  htmlFor='email'
-                  className='block text-sm font-medium text-gray-700'
-                >
-                  Email
-                </label>
-                <Controller
-                  name='email'
-                  control={control}
-                  render={({ field }) => (
-                    <>
-                      <InputText
-                        id='email'
-                        {...field}
-                        type='email'
-                        className='w-full mt-1 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-md'
-                      />
-                      <ErrorMessage
-                        errors={errors}
-                        name='email'
-                        render={({ message }) => (
-                          <div className='text-red-500 mt-1'>{message}</div>
-                        )}
-                      />
-                    </>
-                  )}
-                />
-              </div>
-              <div className='mb-4'>
-                <label
-                  htmlFor='password'
-                  className='block text-sm font-medium text-gray-700'
-                >
-                  Password
-                </label>
-                <Controller
-                  name='password'
-                  control={control}
-                  render={({ field }) => (
-                    <>
-                      <InputText
-                        id='password'
-                        {...field}
-                        type='password'
-                        className='w-full mt-1 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-md'
-                      />
-                      <ErrorMessage
-                        errors={errors}
-                        name='password'
-                        render={({ message }) => (
-                          <div className='text-red-500 mt-1'>{message}</div>
-                        )}
-                      />
-                    </>
-                  )}
-                />
-              </div>
+              <Input
+                label='Email'
+                name='email'
+                type='email'
+                control={control}
+              />
+              <ErrorMessage
+                errors={errors}
+                name='email'
+                render={({ message }) => (
+                  <div className='text-red-500'>{message}</div>
+                )}
+              />
+              <Input
+                label='Password'
+                name='password'
+                type='password'
+                control={control}
+              />
+              <ErrorMessage
+                errors={errors}
+                name='password'
+                render={({ message }) => (
+                  <div className='text-red-500'>{message}</div>
+                )}
+              />
+
               <div className='flex justify-center'>
                 <Button
                   label='Submit'
