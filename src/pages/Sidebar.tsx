@@ -1,9 +1,9 @@
 import { Link, Route, Routes } from 'react-router-dom'
 import { Home } from './Home'
-import { SignUp } from './SignUp'
-import { NotFound } from './NotFound';
+import SignUp from './SignUp'
+import NotFound from './NotFound';
 
-export function Sidebar () {
+const Sidebar = () => {
     return (
         <div className="flex">
             <div className="w-64 h-screen bg-gray-100 text-white p-4 m-4 rounded-2xl">
@@ -38,3 +38,5 @@ export function Sidebar () {
         </div>
     );
 }
+
+export default Sidebar

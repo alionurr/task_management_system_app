@@ -3,6 +3,7 @@ import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { InputText } from 'primereact/inputtext'
 import { Button } from 'primereact/button'
+import { ErrorMessage } from '@hookform/error-message'
 
 const schema = z.object({
     email: z.string().email(),
@@ -11,7 +12,7 @@ const schema = z.object({
 
 type FormFields = z.infer<typeof schema>
 
-export function SignIn () {
+const SignIn = () => {
     
     const {
       control,
@@ -46,21 +47,23 @@ export function SignIn () {
                   name='email'
                   control={control}
                   render={({ field }) => (
-                    <InputText
-                      id='email'
-                      {...field}
-                      onChange={(e) => {
-                        field.onChange(e)
-                        console.log(e.target.value)
-                      }}
-                      type='email'
-                      className='w-full mt-1 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-md'
-                    />
+                    <>
+                      <InputText
+                        id='email'
+                        {...field}
+                        type='email'
+                        className='w-full mt-1 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-md'
+                      />
+                      <ErrorMessage
+                        errors={errors}
+                        name='email'
+                        render={({ message }) => (
+                          <div className='text-red-500 mt-1'>{message}</div>
+                        )}
+                      />
+                    </>
                   )}
                 />
-                {errors.email && (
-                  <p className='text-red-500'>{errors.email.message}</p>
-                )}
               </div>
               <div className='mb-4'>
                 <label
@@ -70,26 +73,26 @@ export function SignIn () {
                   Password
                 </label>
                 <Controller
-                    name='password'
-                    control={control}
-                    render={({ field }) => (
-                    <InputText
+                  name='password'
+                  control={control}
+                  render={({ field }) => (
+                    <>
+                      <InputText
                         id='password'
                         {...field}
-                        onChange={(e) => {
-                            field.onChange(e)
-                            console.log(e.target.value)
-                        }}
                         type='password'
-                        className='w-full mt-1 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-md' />                    
-                    )}
+                        className='w-full mt-1 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-md'
+                      />
+                      <ErrorMessage
+                        errors={errors}
+                        name='password'
+                        render={({ message }) => (
+                          <div className='text-red-500 mt-1'>{message}</div>
+                        )}
+                      />
+                    </>
+                  )}
                 />
-                {errors.password && (
-                  <div className='text-red-500 mt-1'>
-                    {' '}
-                    {errors.password.message}{' '}
-                  </div>
-                )}
               </div>
               <div className='flex justify-center'>
                 <Button
@@ -105,3 +108,5 @@ export function SignIn () {
       </>
     )
 }
+
+export default SignIn;
