@@ -1,7 +1,7 @@
 import { useLocation } from "react-router-dom";
 import { BreadCrumb } from "primereact/breadcrumb";
 
-export function BreadcrumbComponent () {
+export function Breadcrumb () {
         const pathnames = useLocation().pathname.split('/').filter(x => x);
         // Breadcrumb öğelerini oluşturmak için
         const breadcrumbItems = pathnames.map((pathname) => {

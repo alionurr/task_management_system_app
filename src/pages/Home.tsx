@@ -1,6 +1,6 @@
 import { Card } from 'primereact/card'
 
-export function Home () {
+const Home = () => {
 
     return (
         <>
@@ -33,3 +33,5 @@ export function Home () {
         </>
     )
 }
+
+export default Home

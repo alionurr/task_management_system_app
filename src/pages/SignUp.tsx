@@ -2,7 +2,6 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button } from 'primereact/button'
-import { ErrorMessage } from '@hookform/error-message';
 import Input from '../components/Input';
 
 
@@ -19,7 +18,7 @@ const SignUp = () => {
     const {
       control,
       handleSubmit,
-      formState: { errors },
+      formState: {},
     } = useForm<FormFields>({
       resolver: zodResolver(schema),
       defaultValues: {
@@ -41,40 +40,27 @@ const SignUp = () => {
               User Registration Form
             </h2>
             <form onSubmit={handleSubmit(onSubmit)}>
-              <Input label='Name' name='name' type='name' control={control} />
-              <ErrorMessage
-                errors={errors}
+              <Input
+                label='Name'
                 name='name'
-                render={({ message }) => (
-                  <div className='text-red-500'>{message}</div>
-                )}
+                type='name'
+                control={control}
               />
+              
               <Input
                 label='Email'
                 name='email'
                 type='email'
                 control={control}
               />
-              <ErrorMessage
-                errors={errors}
-                name='email'
-                render={({ message }) => (
-                  <div className='text-red-500'>{message}</div>
-                )}
-              />
+
               <Input
                 label='Password'
                 name='password'
                 type='password'
                 control={control}
               />
-              <ErrorMessage
-                errors={errors}
-                name='password'
-                render={({ message }) => (
-                  <div className='text-red-500'>{message}</div>
-                )}
-              />
+
               <div className='flex justify-center'>
                 <Button
                   label='Submit'

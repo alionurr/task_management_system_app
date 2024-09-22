@@ -17,22 +17,29 @@ const Input: React.FC<InputProps> = ({
 }) => {
     return (
       <div className='my-2'>
-            {label && <label
-                htmlFor= {name}
-                className='block text-sm font-medium text-gray-700'
-            >
-                {label}
-            </label>}
+        {label && (
+          <label
+            htmlFor={name}
+            className='block text-sm font-medium text-gray-700'
+          >
+            {label}
+          </label>
+        )}
         <Controller
           name={name}
           control={control}
-          render={({ field }) => (
-            <InputText
-              id={name}
-              type={type}
-              {...field}
-              className='w-full mt-1 border px-2 py-1 border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-md'
-            />
+          render={({ field, fieldState }) => (
+            <>
+              <InputText
+                id={name}
+                type={type}
+                {...field}
+                className='w-full mt-1 border px-2 py-1 border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-md'
+              />
+              {fieldState.error && (
+                <div className='text-red-500'>{fieldState.error.message}</div>
+              )}
+            </>
           )}
         />
       </div>

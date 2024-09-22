@@ -3,7 +3,9 @@ import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Button } from 'primereact/button'
 import Input from '../components/Input'
-import { ErrorMessage } from '@hookform/error-message'
+import { useLogin } from '../api/LoginApi'
+import { useNavigate } from 'react-router-dom'
+import { useEffect } from 'react'
 
 const schema = z.object({
     email: z.string().email(),
@@ -13,11 +15,19 @@ const schema = z.object({
 type FormFields = z.infer<typeof schema>
 
 const SignIn = () => {
+    const navigate = useNavigate()
+    
+    useEffect(() => {
+      let isAuth = localStorage.getItem('token')
+      if (isAuth && isAuth !== 'undefined') {
+        navigate('/')
+      }
+    }, [])
     
     const {
       control,
       handleSubmit,
-      formState: { errors },
+      formState: {},
     } = useForm<FormFields>({
       resolver: zodResolver(schema),
       defaultValues: {
@@ -25,9 +35,16 @@ const SignIn = () => {
         password: '',
       },
     })
+  
+    const loginMutation = useLogin()
 
     const onSubmit = (data: FormFields) => {
       console.log('Form Data:', data)
+      loginMutation.mutate(data, {
+        onSuccess: () => {
+          navigate('/')
+        }
+      })
     }
 
     return (
@@ -42,27 +59,14 @@ const SignIn = () => {
                 type='email'
                 control={control}
               />
-              <ErrorMessage
-                errors={errors}
-                name='email'
-                render={({ message }) => (
-                  <div className='text-red-500'>{message}</div>
-                )}
-              />
+
               <Input
                 label='Password'
                 name='password'
                 type='password'
                 control={control}
               />
-              <ErrorMessage
-                errors={errors}
-                name='password'
-                render={({ message }) => (
-                  <div className='text-red-500'>{message}</div>
-                )}
-              />
-
+              
               <div className='flex justify-center'>
                 <Button
                   label='Submit'
