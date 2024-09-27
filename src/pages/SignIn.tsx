@@ -36,17 +36,19 @@ const SignIn = () => {
       },
     })
   
-    const loginMutation = useLogin()
+    const {mutate:loginMutation, status, error} = useLogin()
 
     const onSubmit = (data: FormFields) => {
       console.log('Form Data:', data)
-      loginMutation.mutate(data, {
+      loginMutation(data, {
         onSuccess: () => {
           navigate('/')
         }
       })
     }
-
+  
+    const isButtonDisabled = status === 'pending'
+  
     return (
       <>
         <div className='flex justify-center items-center h-screen bg-gray-100'>
@@ -66,15 +68,20 @@ const SignIn = () => {
                 type='password'
                 control={control}
               />
-              
+
               <div className='flex justify-center'>
                 <Button
                   label='Submit'
                   icon='pi pi-check'
+                  disabled={isButtonDisabled}
                   className='w-full p-1 mt-3'
-                  style={{ backgroundColor: '#1d4ed8', color: '#ffffff' }}
                 />
               </div>
+              {error && (
+                <div className='text-red-500 mt-5 text-center'>
+                  {error?.message}
+                </div>
+              )}
             </form>
           </div>
         </div>

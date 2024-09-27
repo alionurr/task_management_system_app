@@ -9,8 +9,8 @@ import { getUsers } from '../api/UserApi'
 
 // Enum tanımlaması
 enum Role {
-    Admin = 'Admin',
-    User = 'User',
+    Admin = 'admin',
+    User = 'user',
     // Guest = 'Guest'
 }
 
@@ -19,6 +19,7 @@ interface User {
   name: string
   email: string
   role: Role
+  created_at: string
 }
 
 const Users = () => {
@@ -30,8 +31,22 @@ const Users = () => {
     })
   console.log(data)
 
+  const formatDate = (rowData: User) => {
+    const date = new Date(rowData.created_at);
+    return date.toLocaleString('tr-TR', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+    })
+  }
     if (isLoading) {
-      return <p>Loading...</p>
+      return (
+        <div className='loader-overlay'>
+          <img className='loader' src='./loader.svg' />
+        </div>
+      )
     }
 
     if (error) {
@@ -67,10 +82,13 @@ const Users = () => {
         globalFilter={globalFilter}
         header={header}
         emptyMessage='No users found.'
+        sortField='created_at'
+        sortOrder={-1}
       >
         <Column field='name' header='Name' filter sortable />
         <Column field='email' header='Email' filter sortable />
-        <Column field='role' header='Rol' filter sortable />
+        <Column field='role' header='Role' filter sortable />
+        <Column field='created_at' header='CreatedAt' body={formatDate} filter sortable />
       </DataTable>
     </div>
   )

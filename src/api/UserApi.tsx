@@ -1,6 +1,6 @@
 enum Role {
-    Admin= 'Admin',
-    User= 'User'
+    Admin= 'admin',
+    User= 'user'
 }
 
 interface User {
@@ -8,6 +8,7 @@ interface User {
   name: string
   email: string
   role: Role
+  created_at: string
 }
 
 export const getUsers = async (): Promise<User[]> => {

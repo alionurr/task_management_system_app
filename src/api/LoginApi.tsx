@@ -19,7 +19,7 @@ const login = async (loginData: LoginData) => {
   })
 
   if (!response.ok) {
-    throw new Error('login failed')
+    throw new Error('Bilgilerinizi kontrol edin ve tekrar deneyin!')
   }
 
   const data = await response.json()
